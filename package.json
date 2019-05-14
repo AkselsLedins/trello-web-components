@@ -1,0 +1,23 @@
+{
+  "name": "trello-web-components",
+  "version": "0.1.0",
+  "description": "Trello-like Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AkselsLedins/trello-web-components.git"
+  },
+  "keywords": [
+    "trello",
+    "web-components"
+  ],
+  "author": "Aksels LEDINS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AkselsLedins/trello-web-components/issues"
+  },
+  "homepage": "https://github.com/AkselsLedins/trello-web-components#readme"
+}
