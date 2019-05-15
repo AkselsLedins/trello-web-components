@@ -12,6 +12,7 @@
     <script src="./src/app.js"></script>
     <script src="./src/column.js"></script>
     <script src="./src/column-creator.js"></script>
+    <script src="./src/card-creator.js"></script>
   </head>
 
   <body>
@@ -34,6 +35,13 @@
         font-size: 20px;
         line-height: 24px;
         margin: 0 0 8px;
+      }
+      textarea {
+        width: 100%;
+        border: none;
+        color: #172b4d;
+        font: inherit;
+        margin: 0;
       }
       input {
         color: #172b4d;
@@ -144,6 +152,15 @@
         margin: 0;
         transition: margin 85ms ease-in,background 85ms ease-in;
         width: 100%;
+      }
+
+      #new-card-input {
+        box-shadow: none;
+        border: none;
+      }
+
+      .card-composer {
+        padding-bottom: 8px;
       }
 
       .mod-add {

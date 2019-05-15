@@ -12,6 +12,9 @@ templateColumn.innerHTML = `
         <div class="card">
           <div class="card-title">a second card</div>
         </div>
+
+        <hr />
+        <trello-card-creator></trello-card-creator>
       </div>
     </div>
   </div>
