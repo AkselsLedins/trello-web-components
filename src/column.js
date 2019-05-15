@@ -1,10 +1,18 @@
 const templateColumn = document.createElement('template');
 templateColumn.innerHTML = `
-  <div>
-    <h2></h2>
-    <div>
-      <div>a first card</div>
-      <div>a second card</div>
+  <div class="column-wrapper">
+    <div class="column">
+      <div class="column-header">
+        <h2></h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-title">a first card</div>
+        </div>
+        <div class="card">
+          <div class="card-title">a second card</div>
+        </div>
+      </div>
     </div>
   </div>
 `;

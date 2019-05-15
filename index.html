@@ -24,7 +24,84 @@
         padding: 0;
 
         background-color: rgb(0, 121, 191);
-        color: #FFF;
+        color: #172b4d;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+      }
+      h2 {
+        font-size: 20px;
+        line-height: 24px;
+        margin: 0 0 8px;
+      }
+
+      #columns-container {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .column-wrapper {
+        width: 272px;
+        margin: 0 4px;
+        height: 100%;
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: top;
+        white-space: nowrap;
+      }
+      .column {
+        background-color: #dfe1e6;
+        border-radius: 3px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        max-height: 100%;
+        position: relative;
+        white-space: normal;
+      }
+      .column-header {
+        flex: 0 0 auto;
+        padding: 10px 8px 8px;
+        position: relative;
+        min-height: 20px;
+      }
+
+      .cards {
+        flex: 1 1 auto;
+        margin-bottom: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin: 0 4px;
+        padding: 0 4px;
+        z-index: 1;
+        min-height: 0;
+      }
+      .card {
+        background-color: #fff;
+        border-radius: 3px;
+        box-shadow: 0 1px 0 rgba(9,30,66,.25);
+        cursor: pointer;
+        display: block;
+        margin-bottom: 8px;
+        max-width: 300px;
+        min-height: 20px;
+        position: relative;
+        text-decoration: none;
+        z-index: 0;
+
+        overflow: hidden;
+        padding: 6px 8px 2px;
+        position: relative;
+        z-index: 10;
+      }
+      .card-title {
+        clear: both;
+        display: block;
+        margin: 0 0 4px;
+        overflow: hidden;
+        text-decoration: none;
+        word-wrap: break-word;
+        color: #172b4d;
       }
     </style>
   </body>
