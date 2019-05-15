@@ -1,4 +1,3 @@
-console.log('oui');
 const templateColumnCreator = document.createElement('template');
 templateColumnCreator.innerHTML = `
   <div class="column-wrapper mod-add">
@@ -22,6 +21,17 @@ class TrelloColumnCreator extends HTMLElement {
 
   connectedCallback() {
     this.appendChild(templateColumnCreator.content.cloneNode(true));
+
+    this.$form = this.querySelector('form');
+    this.$input = this.querySelector('input');
+    this.$form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      if (!this.$input.value) return;
+      // TODO: check unicity of title here ?
+      this.dispatchEvent(new CustomEvent('columnCreation', { detail: this.$input.value }));
+      this.$input.value = '';
+    });
   }
 
   disconnectedCallback() {}
