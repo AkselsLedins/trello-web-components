@@ -1,10 +1,10 @@
 const templateApp = document.createElement('template');
 templateApp.innerHTML = `
-  <section>
-    <column-creator></column-creator>
-
+  <section id="app">
     <div id="columns-container">
     </div>
+
+    <trello-column-creator></trello-column-creator>
   </section>
 `;
 
