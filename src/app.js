@@ -20,14 +20,25 @@ class TrelloApp extends HTMLElement {
     this.appendChild(templateApp.content.cloneNode(true));
 
     // get local references
-    this.$columnCreator = this.querySelector('column-creator');
+    this.$columnCreator = this.querySelector('trello-column-creator');
     this.$columnsContainer = this.querySelector('#columns-container');
+
+    // listen for events: column creation
+    this.$columnCreator.addEventListener('columnCreation', this.addColumn.bind(this));
 
     // render
     this._render();
   }
 
   disconnectedCallback() {}
+
+  addColumn(e) {
+    // find the highest id if present and add 1
+    const nextId = Math.max.apply(Math, this._columns.map(o => o.id)) || 0 + 1;
+
+    this._columns.push({ id: nextId, title: e.detail });
+    this._render();
+  }
 
   _render() {
     if (!this.$columnsContainer) return;
