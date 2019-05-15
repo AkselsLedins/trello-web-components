@@ -13,7 +13,10 @@ class TrelloApp extends HTMLElement {
     super();
 
     // initial state
-    this._columns = [{ id: 1, title: 'First column' }, { id: 2, title: 'Second column' }];
+    this._columns = [];
+
+    this.fetchData.bind(this);
+    this.fetchData();
   }
 
   connectedCallback() {
@@ -31,6 +34,15 @@ class TrelloApp extends HTMLElement {
   }
 
   disconnectedCallback() {}
+
+  async fetchData() {
+    const response = await fetch('http://localhost:3000/columns');
+    const columns = await response.json();
+
+    this._columns = columns;
+
+    this._render();
+  }
 
   addColumn(e) {
     // find the highest id if present and add 1
