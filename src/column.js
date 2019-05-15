@@ -20,8 +20,11 @@ class TrelloColumn extends HTMLElement {
     super();
 
     // initial state
-    this._title = '';
+    this._id = this.getAttribute('id') || null;
+    this._title = this.getAttribute('title') || null;
     this._cards = [];
+
+    this.fetchData.bind(this);
   }
 
   connectedCallback() {
@@ -37,15 +40,26 @@ class TrelloColumn extends HTMLElement {
 
     // render
     this._render();
+
+    this.fetchData();
   }
 
   disconnectedCallback() {}
 
   static get observedAttributes() {
-    return ['title'];
+    return ['id', 'title'];
   }
   attributeChangedCallback(name, _, newValue) {
     this[`_${name}`] = newValue;
+  }
+
+  async fetchData() {
+    const response = await fetch(`http://localhost:3000/cards?columnId=${this._id}`);
+    const cards = await response.json();
+
+    this._cards = cards;
+
+    this._render();
   }
 
   addCard(e) {
