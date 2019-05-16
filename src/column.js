@@ -54,26 +54,25 @@ class TrelloColumn extends HTMLElement {
   }
 
   async fetchData() {
-    const response = await API.get.cards(`columnId=${this._id}`);
-    const cards = await response.json();
+    const cards = await API.get.cards(`columnId=${this._id}`);
 
     this._cards = cards;
 
     this._render();
   }
 
-  addCard(e) {
+  async addCard(e) {
     // find the next id
-    const nextId = this._cards.length ? Math.max.apply(Math, this._cards.map(o => o.id)) + 1 : 1;
+    console.log('columnId', this._id);
     const { title, description } = e.detail;
 
-    const newCard = {
-      id: nextId,
+    const data = await API.create.card({
       title,
       description,
-    };
+      columnId: this._id,
+    });
 
-    this._cards.push(newCard);
+    this._cards.push(data);
 
     this._render();
   }
