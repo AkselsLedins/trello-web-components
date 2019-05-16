@@ -20,8 +20,11 @@ class TrelloColumn extends HTMLElement {
     super();
 
     // initial state
-    this._title = '';
+    this._id = this.getAttribute('id') || null;
+    this._title = this.getAttribute('title') || null;
     this._cards = [];
+
+    this.fetchData.bind(this);
   }
 
   connectedCallback() {
@@ -37,29 +40,39 @@ class TrelloColumn extends HTMLElement {
 
     // render
     this._render();
+
+    this.fetchData();
   }
 
   disconnectedCallback() {}
 
   static get observedAttributes() {
-    return ['title'];
+    return ['id', 'title'];
   }
   attributeChangedCallback(name, _, newValue) {
     this[`_${name}`] = newValue;
   }
 
-  addCard(e) {
+  async fetchData() {
+    const cards = await API.get.cards(`columnId=${this._id}`);
+
+    this._cards = cards;
+
+    this._render();
+  }
+
+  async addCard(e) {
     // find the next id
-    const nextId = this._cards.length ? Math.max.apply(Math, this._cards.map(o => o.id)) + 1 : 1;
+    console.log('columnId', this._id);
     const { title, description } = e.detail;
 
-    const newCard = {
-      id: nextId,
+    const data = await API.create.card({
       title,
       description,
-    };
+      columnId: this._id,
+    });
 
-    this._cards.push(newCard);
+    this._cards.push(data);
 
     this._render();
   }

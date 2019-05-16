@@ -29,7 +29,9 @@ class TrelloColumnCreator extends HTMLElement {
 
       if (!this.$input.value) return;
       // TODO: check unicity of title here ?
-      this.dispatchEvent(new CustomEvent('columnCreation', { detail: this.$input.value }));
+      this.dispatchEvent(
+        new CustomEvent('columnCreation', { detail: { title: this.$input.value } })
+      );
       this.$input.value = '';
     });
   }
