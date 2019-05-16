@@ -43,11 +43,13 @@ class TrelloApp extends HTMLElement {
     this._render();
   }
 
-  addColumn(e) {
-    // find the highest id if present and add 1
-    const nextId = Math.max.apply(Math, this._columns.map(o => o.id)) || 0 + 1;
+  async addColumn(e) {
+    const { title } = e.detail;
 
-    this._columns.push({ id: nextId, title: e.detail });
+    const data = await API.create.column({ title });
+
+    this._columns.push(data);
+
     this._render();
   }
 

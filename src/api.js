@@ -30,6 +30,7 @@ const API = {
   },
   create: {
     card: data => callApi('cards', 'POST', '', data),
+    column: data => callApi('columns', 'POST', '', data),
   },
 };
 
