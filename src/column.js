@@ -54,7 +54,7 @@ class TrelloColumn extends HTMLElement {
   }
 
   async fetchData() {
-    const response = await fetch(`http://localhost:3000/cards?columnId=${this._id}`);
+    const response = await API.get.cards(`columnId=${this._id}`);
     const cards = await response.json();
 
     this._cards = cards;

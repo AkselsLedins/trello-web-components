@@ -36,7 +36,7 @@ class TrelloApp extends HTMLElement {
   disconnectedCallback() {}
 
   async fetchData() {
-    const response = await fetch('http://localhost:3000/columns');
+    const response = await API.get.columns();
     const columns = await response.json();
 
     this._columns = columns;
