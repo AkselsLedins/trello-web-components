@@ -99,7 +99,7 @@ class TrelloColumn extends HTMLElement {
       $item.setAttribute('id', id);
       $item.setAttribute('title', title);
       $item.setAttribute('columnId', columnId);
-      $item.setAttribute('description', description);
+      $item.setAttribute('description', description || '');
 
       $item.index = index;
 

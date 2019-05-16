@@ -5,6 +5,7 @@ templateCard.innerHTML = `
     <div class="card-id"></div>
     <div class="card-title"></div>
     <input hidden class="card-title card-title-input" />
+    <textarea hidden class="card-description card-description-input"></textarea>
     <div class="card-description"></div>
     <button hidden class="primary card-save-btn">Save</button>
   </div>
@@ -27,6 +28,8 @@ class TrelloCard extends HTMLElement {
     // get local references
     this.$title = this.querySelector('.card-title');
     this.$titleInput = this.querySelector('.card-title-input');
+    this.$descriptionInput = this.querySelector('.card-description-input');
+
     this.$editButton = this.querySelector('.card-edit-btn');
     this.$saveButton = this.querySelector('.card-save-btn');
 
@@ -43,18 +46,25 @@ class TrelloCard extends HTMLElement {
   toggleEdit() {
     this.$title.hidden = !this.$title.hidden;
     this.$titleInput.hidden = !this.$titleInput.hidden;
+    this.$descriptionInput.hidden = !this.$descriptionInput.hidden;
     this.$saveButton.hidden = false
 
     if (!this.$titleInput.hidden) {
       this.$titleInput.value = this._title;
+      this.$descriptionInput.value = this._description;
+
+
+      console.log('this.$descriptionInput.value', this._description, this.$descriptionInput.value);
     }
   }
 
   async saveCard() {
     const title = this.$titleInput.value;
-    console.log('title', title);
+    const description = this.$descriptionInput.value;
+    const columnId = this._columnId;
+    const id = this._id;
 
-    const card = await API.update.card({ id: this._id, title, columnId: this._columnId });
+    const card = await API.update.card({ id, title, columnId, description });
 
     this.dispatchEvent(new CustomEvent('cardUpdate', { detail: card }));
 
@@ -71,8 +81,7 @@ class TrelloCard extends HTMLElement {
       this[`_columnId`] = newValue;
       return;
     }
-
-    this[`_${name}`] = newValue;
+    this[`_${name}`] = newValue || '';
   }
 
   _render() {
