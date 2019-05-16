@@ -9,7 +9,7 @@ const callApi = async (what, method, query, body = {}) => {
     return await response.json();
   }
   if (['PUT', 'POST'].includes(method)) {
-    const response = await fetch(`http://localhost:3000/${what}?${query}`, {
+    const response = await fetch(`http://localhost:3000/${what}`, {
       method,
       body: JSON.stringify(body),
       headers: {
@@ -32,6 +32,9 @@ const API = {
     card: data => callApi('cards', 'POST', '', data),
     column: data => callApi('columns', 'POST', '', data),
   },
+  update: {
+    card: data => callApi(`cards/${data.id}`, 'PUT', '', data),
+  }
 };
 
 window.__API = API;

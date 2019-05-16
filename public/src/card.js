@@ -1,9 +1,12 @@
 const templateCard = document.createElement('template');
 templateCard.innerHTML = `
   <div class="card">
+    <button class="card-edit-btn">Edit</button>
     <div class="card-id"></div>
     <div class="card-title"></div>
+    <input hidden class="card-title card-title-input" />
     <div class="card-description"></div>
+    <button hidden class="primary card-save-btn">Save</button>
   </div>
 `;
 
@@ -15,6 +18,7 @@ class TrelloCard extends HTMLElement {
     this._id = '';
     this._title = '';
     this._description = '';
+    this._columnId = null;
   }
 
   connectedCallback() {
@@ -22,17 +26,52 @@ class TrelloCard extends HTMLElement {
 
     // get local references
     this.$title = this.querySelector('.card-title');
+    this.$titleInput = this.querySelector('.card-title-input');
+    this.$editButton = this.querySelector('.card-edit-btn');
+    this.$saveButton = this.querySelector('.card-save-btn');
+
+    // listen for events
+    this.$editButton.addEventListener('click', this.toggleEdit.bind(this));
+    this.$saveButton.addEventListener('click', this.saveCard.bind(this));
+
+    this.$titleInput.hidden = true;
 
     // render
     this._render();
   }
 
-  disconnectedCallback() {}
+  toggleEdit() {
+    this.$title.hidden = !this.$title.hidden;
+    this.$titleInput.hidden = !this.$titleInput.hidden;
+    this.$saveButton.hidden = false
+
+    if (!this.$titleInput.hidden) {
+      this.$titleInput.value = this._title;
+    }
+  }
+
+  async saveCard() {
+    const title = this.$titleInput.value;
+    console.log('title', title);
+
+    const card = await API.update.card({ id: this._id, title, columnId: this._columnId });
+
+    this.dispatchEvent(new CustomEvent('cardUpdate', { detail: card }));
+
+    this.toggleEdit();
+  }
+
+  disconnectedCallback() { }
 
   static get observedAttributes() {
-    return ['id', 'title', 'description'];
+    return ['id', 'title', 'description', 'columnid'];
   }
   attributeChangedCallback(name, _, newValue) {
+    if (name === 'columnid') {
+      this[`_columnId`] = newValue;
+      return;
+    }
+
     this[`_${name}`] = newValue;
   }
 
