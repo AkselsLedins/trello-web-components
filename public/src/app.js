@@ -53,6 +53,19 @@ class TrelloApp extends HTMLElement {
     this._render();
   }
 
+  async deleteColumn(e) {
+    const columnId = e.detail;
+    const index = this._columns.findIndex(column => column.id === columnId);
+
+    this._columns.splice(index, 1);
+    // NOTE: rerendering everything is quite poor in term of perf.
+    this._render();
+
+    // NOTE: we should delete all cards associated to this column but
+    //       the API should handle that so we can just ignore that and
+    //       let the cards column less in the db
+  }
+
   _render() {
     if (!this.$columnsContainer) return;
 
@@ -70,6 +83,8 @@ class TrelloApp extends HTMLElement {
       $item.setAttribute('id', id);
       $item.setAttribute('title', title);
       $item.index = index;
+
+      $item.addEventListener('columnDelete', this.deleteColumn.bind(this));
 
       this.$columnsContainer.appendChild($item);
     });

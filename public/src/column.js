@@ -4,6 +4,7 @@ templateColumn.innerHTML = `
     <div class="column">
       <div class="column-header">
         <h2></h2>
+        <div class="column-delete-button">DEL</div>
       </div>
 
       <div class="cards cards-container"></div>
@@ -35,6 +36,7 @@ class TrelloColumn extends HTMLElement {
 
     // get local references
     this.$title = this.querySelector('h2');
+    this.$deleteButton = this.querySelector('.column-delete-button');
     this.$cardCreator = this.querySelector('trello-card-creator');
     this.$cardsContainer = this.querySelector('.cards-container');
     this.$columnWrapper = this.querySelector('.column-wrapper');
@@ -46,6 +48,8 @@ class TrelloColumn extends HTMLElement {
     this.$columnWrapper.addEventListener('dragleave', this.onCardLeave.bind(this));
     this.$columnWrapper.addEventListener('drop', this.onDrop.bind(this));
     this.$columnWrapper.addEventListener('dragover', this.onDragOver.bind(this));
+    // listen to other events
+    this.$deleteButton.addEventListener('click', this.deleteColumn.bind(this));
 
     // render
     this._render();
@@ -135,6 +139,15 @@ class TrelloColumn extends HTMLElement {
     // NOTE rerendering everything is quite poor as we loose
     // the other cards state
     this._render();
+  }
+
+  async deleteColumn() {
+    if (!window.confirm('Are you sure you want to delete that column and all of its cards ?'))
+      return;
+
+    await API.delete.column({ id: this._id });
+
+    this.dispatchEvent(new CustomEvent('columnDelete', { detail: this._id }));
   }
 
   _render() {
