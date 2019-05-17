@@ -10,6 +10,7 @@ templateCard.innerHTML = `
     <textarea hidden class="card-description card-description-input"></textarea>
     <div class="card-description"></div>
     <button hidden class="primary card-save-btn">Save</button>
+    <button class="card-delete-btn">Del</button>
   </div>
 `;
 
@@ -40,10 +41,12 @@ class TrelloCard extends HTMLElement {
 
     this.$editButton = this.querySelector('.card-edit-btn');
     this.$saveButton = this.querySelector('.card-save-btn');
+    this.$deleteButton = this.querySelector('.card-delete-btn');
 
     // listen for events
     this.$editButton.addEventListener('click', this.toggleEdit.bind(this));
     this.$saveButton.addEventListener('click', this.saveCard.bind(this));
+    this.$deleteButton.addEventListener('click', this.deleteCard.bind(this));
     this.$card.addEventListener('click', this.toggleDescription.bind(this));
 
     // handle dnd
@@ -86,6 +89,16 @@ class TrelloCard extends HTMLElement {
       this.$titleInput.value = this._title;
       this.$descriptionInput.value = this._description;
     }
+  }
+
+  async deleteCard(e) {
+    e.stopPropagation();
+
+    if (!window.confirm('Are you sure to delete this card ?')) return;
+
+    await API.delete.card({ id: this._id });
+
+    this.dispatchEvent(new CustomEvent('cardDelete', { detail: this._id }));
   }
 
   async saveCard(e) {

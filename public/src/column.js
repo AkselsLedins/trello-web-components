@@ -42,10 +42,10 @@ class TrelloColumn extends HTMLElement {
     // listen to custom events
     this.$cardCreator.addEventListener('cardCreation', this.addCard.bind(this));
     // listen to dnd events
-    this.$columnWrapper.addEventListener('dragenter', this.onCardHover.bind(this))
-    this.$columnWrapper.addEventListener('dragleave', this.onCardLeave.bind(this))
-    this.$columnWrapper.addEventListener('drop', this.onDrop.bind(this))
-    this.$columnWrapper.addEventListener('dragover', this.onDragOver.bind(this))
+    this.$columnWrapper.addEventListener('dragenter', this.onCardHover.bind(this));
+    this.$columnWrapper.addEventListener('dragleave', this.onCardLeave.bind(this));
+    this.$columnWrapper.addEventListener('drop', this.onDrop.bind(this));
+    this.$columnWrapper.addEventListener('dragover', this.onDragOver.bind(this));
 
     // render
     this._render();
@@ -53,7 +53,7 @@ class TrelloColumn extends HTMLElement {
     this.fetchData();
   }
 
-  disconnectedCallback() { }
+  disconnectedCallback() {}
 
   static get observedAttributes() {
     return ['id', 'title'];
@@ -63,23 +63,25 @@ class TrelloColumn extends HTMLElement {
   }
 
   // https://stackoverflow.com/questions/21339924/drop-event-not-firing-in-chrome
-  onDragOver(e) { e.preventDefault() }
+  onDragOver(e) {
+    e.preventDefault();
+  }
   onCardHover(e) {
     // console.log('hover', e);
     e.preventDefault();
     this._dragCounter++;
 
-    this.$columnWrapper.className += " hovered";
+    this.$columnWrapper.className += ' hovered';
   }
   onCardLeave() {
     this._dragCounter--;
 
     if (this._dragCounter === 0) {
-      this.$columnWrapper.className = "column-wrapper";
+      this.$columnWrapper.className = 'column-wrapper';
     }
   }
   async onDrop(e) {
-    this.$columnWrapper.className = "column-wrapper";
+    this.$columnWrapper.className = 'column-wrapper';
     this._dragCounter = 0;
 
     const data = JSON.parse(e.dataTransfer.getData('text/json'));
@@ -90,7 +92,6 @@ class TrelloColumn extends HTMLElement {
     // NOTE optimization here
     await this.fetchData();
   }
-
 
   async fetchData() {
     const cards = await API.get.cards(`columnId=${this._id}`);
@@ -117,10 +118,20 @@ class TrelloColumn extends HTMLElement {
 
   replaceCard(e) {
     const newCard = e.detail;
-    const index = this._cards.findIndex(card => card.id === newCard.id)
+    const index = this._cards.findIndex(card => card.id === newCard.id);
 
     this._cards[index] = newCard;
 
+    // NOTE rerendering everything is quite poor as we loose
+    // the other cards state
+    this._render();
+  }
+
+  deleteCard(e) {
+    const cardId = e.detail;
+    const index = this._cards.findIndex(card => card.id === cardId);
+
+    this._cards.splice(index, 1);
     // NOTE rerendering everything is quite poor as we loose
     // the other cards state
     this._render();
@@ -143,7 +154,8 @@ class TrelloColumn extends HTMLElement {
       $item.index = index;
 
       // listen to custom event
-      $item.addEventListener('cardUpdate', this.replaceCard.bind(this))
+      $item.addEventListener('cardUpdate', this.replaceCard.bind(this));
+      $item.addEventListener('cardDelete', this.deleteCard.bind(this));
       // listen to native event dragend to fetch all data again
       $item.addEventListener('dragend', this.fetchData.bind(this));
 
