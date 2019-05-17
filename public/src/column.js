@@ -44,7 +44,7 @@ class TrelloColumn extends HTMLElement {
     this.fetchData();
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() { }
 
   static get observedAttributes() {
     return ['id', 'title'];
@@ -63,7 +63,6 @@ class TrelloColumn extends HTMLElement {
 
   async addCard(e) {
     // find the next id
-    console.log('columnId', this._id);
     const { title, description } = e.detail;
 
     const data = await API.create.card({
@@ -77,20 +76,34 @@ class TrelloColumn extends HTMLElement {
     this._render();
   }
 
+  replaceCard(e) {
+    const newCard = e.detail;
+    const index = this._cards.findIndex(card => card.id === newCard.id)
+
+    this._cards[index] = newCard;
+
+    // NOTE rerendering everything is quite poor as we loose
+    // the other cards state
+    this._render();
+  }
+
   _render() {
     this.$title.textContent = this._title;
 
     this.$cardsContainer.innerHTML = '';
 
-    this._cards.forEach(({ id, title, description }, index) => {
+    this._cards.forEach(({ id, title, description, columnId }, index) => {
       // instantiate a new column
       const $item = document.createElement('trello-card');
 
       $item.setAttribute('id', id);
       $item.setAttribute('title', title);
-      $item.setAttribute('description', description);
+      $item.setAttribute('columnId', columnId);
+      $item.setAttribute('description', description || '');
 
       $item.index = index;
+
+      $item.addEventListener('cardUpdate', this.replaceCard.bind(this))
 
       this.$cardsContainer.appendChild($item);
     });
