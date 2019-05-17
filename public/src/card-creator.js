@@ -1,13 +1,14 @@
 const templateCardCreator = document.createElement('template');
 templateCardCreator.innerHTML = `
   <div class="card-composer">
-    <form id="new-card-form">
+    <form id="new-card-form" class="card-creator">
       <div class="card">
-        <div class="card-creator">
-          <textarea placeholder="Enter a title for this card..." style="overflow: hidden; overflow-wrap: break-word;resize: none;height: 54px;"></textarea>
+        <div>
+          <textarea class="card-creator-title-input" placeholder="Enter a title for this card..." style="overflow: hidden; overflow-wrap: break-word;resize: none;height: 54px;"></textarea>
+          <textarea class="card-creator-description-input" placeholder="Enter a description for this card..." style="overflow: hidden; overflow-wrap: break-word;resize: none;height: 54px;"></textarea>
         </div>
       </div>
-      <button class="primary" type="submit">Add card</button>
+      <button class="add-card-btn" class="primary" type="submit">Add card</button>
     </form>
   </div>
 `;
@@ -21,15 +22,22 @@ class TrelloCardCreator extends HTMLElement {
     this.appendChild(templateCardCreator.content.cloneNode(true));
 
     this.$form = this.querySelector('form');
-    this.$input = this.querySelector('textarea');
+
+    this.$titleInput = this.querySelector('.card-creator-title-input');
+    this.$descriptionInput = this.querySelector('.card-creator-description-input');
+
     this.$form.addEventListener('submit', e => {
       e.preventDefault();
 
-      if (!this.$input.value) return;
+      if (!this.$titleInput.value) return;
       // TODO: check unicity of title here ?
 
-      this.dispatchEvent(new CustomEvent('cardCreation', { detail: { title: this.$input.value } }));
-      this.$input.value = '';
+      this.dispatchEvent(
+        new CustomEvent('cardCreation', {
+          detail: { title: this.$titleInput.value, description: this.$descriptionInput.value },
+        })
+      );
+      this.$titleInput.value = '';
     });
   }
 
