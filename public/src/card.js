@@ -31,6 +31,7 @@ class TrelloCard extends HTMLElement {
 
     // get local references
     this.$card = this.querySelector('.card');
+    this.$id = this.querySelector('.card-id');
     this.$title = this.querySelector('.card-title');
     this.$description = this.querySelector('.card-description');
 
@@ -46,7 +47,7 @@ class TrelloCard extends HTMLElement {
     this.$card.addEventListener('click', this.toggleDescription.bind(this));
 
     // handle dnd
-    this.$card.addEventListener('dragstart', this.onDragStart.bind(this))
+    this.$card.addEventListener('dragstart', this.onDragStart.bind(this));
 
     this.$titleInput.hidden = true;
 
@@ -66,22 +67,21 @@ class TrelloCard extends HTMLElement {
     this.__mode = this.__mode === 'view' ? 'edit' : 'view';
 
     if (this.__mode === 'view') {
-      this.$title.hidden = false
-      this.$description.hidden = false
+      this.$title.hidden = false;
+      this.$description.hidden = false;
 
-      this.$titleInput.hidden = true
-      this.$descriptionInput.hidden = true
-      this.$saveButton.hidden = true
+      this.$titleInput.hidden = true;
+      this.$descriptionInput.hidden = true;
+      this.$saveButton.hidden = true;
     }
 
-
     if (this.__mode === 'edit') {
-      this.$title.hidden = true
-      this.$description.hidden = true
+      this.$title.hidden = true;
+      this.$description.hidden = true;
 
-      this.$titleInput.hidden = false
-      this.$descriptionInput.hidden = false
-      this.$saveButton.hidden = false
+      this.$titleInput.hidden = false;
+      this.$descriptionInput.hidden = false;
+      this.$saveButton.hidden = false;
 
       this.$titleInput.value = this._title;
       this.$descriptionInput.value = this._description;
@@ -103,7 +103,7 @@ class TrelloCard extends HTMLElement {
     this.toggleEdit(e);
   }
 
-  disconnectedCallback() { }
+  disconnectedCallback() {}
 
   static get observedAttributes() {
     return ['id', 'title', 'description', 'columnid'];
@@ -118,16 +118,20 @@ class TrelloCard extends HTMLElement {
 
   onDragStart(e) {
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/json', JSON.stringify({
-      id: this._id,
-      columnId: this._columnId,
-      // add other fields otherwise the JSON-SERVER api will remove them
-      description: this._description,
-      title: this._title,
-    }));
+    e.dataTransfer.setData(
+      'text/json',
+      JSON.stringify({
+        id: this._id,
+        columnId: this._columnId,
+        // add other fields otherwise the JSON-SERVER api will remove them
+        description: this._description,
+        title: this._title,
+      })
+    );
   }
 
   _render() {
+    this.$id.textContent = `#${this._id}`;
     this.$title.textContent = this._title;
     this.$description.textContent = this._description;
   }
