@@ -4,7 +4,7 @@ templateColumn.innerHTML = `
     <div class="column">
       <div class="column-header">
         <h2></h2>
-        <div class="column-delete-button">DEL</div>
+        <div class="column-delete-button"></div>
       </div>
 
       <div class="cards cards-container"></div>
