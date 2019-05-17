@@ -2,13 +2,13 @@ const templateCardCreator = document.createElement('template');
 templateCardCreator.innerHTML = `
   <div class="card-composer">
     <form id="new-card-form" class="card-creator">
-      <div class="card">
+      <div class="card" style="padding: 6px 8px; margin: 0;">
         <div>
-          <textarea class="card-creator-title-input" placeholder="Enter a title for this card..." style="overflow: hidden; overflow-wrap: break-word;resize: none;height: 54px;"></textarea>
+          <input class="card-creator-title-input" placeholder="Enter a title for this card..."></input>
           <textarea class="card-creator-description-input" placeholder="Enter a description for this card..." style="overflow: hidden; overflow-wrap: break-word;resize: none;height: 54px;"></textarea>
         </div>
+        <button class="add-card-btn primary" type="submit">Add card</button>
       </div>
-      <button class="add-card-btn" class="primary" type="submit">Add card</button>
     </form>
   </div>
 `;

@@ -1,7 +1,9 @@
 const templateCard = document.createElement('template');
 templateCard.innerHTML = `
   <div class="card" draggable="true">
-    <button class="card-edit-btn">Edit</button>
+    <div class="card-edit-btn"></div>
+    <div class="card-delete-btn"></div>
+
     <div class="card-id"></div>
     <div class="card-title"></div>
     <div hidden class="card-description"></div>
@@ -10,7 +12,6 @@ templateCard.innerHTML = `
     <textarea hidden class="card-description card-description-input"></textarea>
     <div class="card-description"></div>
     <button hidden class="primary card-save-btn">Save</button>
-    <button class="card-delete-btn">Del</button>
   </div>
 `;
 
@@ -68,6 +69,8 @@ class TrelloCard extends HTMLElement {
       return;
     }
 
+    // if either the title or the description of the card includes
+    // the query we will display the card
     const containsQuery =
       this._title.includes(searchValue) || this._description.includes(searchValue);
 

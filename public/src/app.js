@@ -2,6 +2,7 @@ const templateApp = document.createElement('template');
 templateApp.innerHTML = `
   <section id="app">
     <div class="search">
+      <div class="search-icon"></div>
       <input id="search" type="text" placeholder="search here" />
     </div>
 
