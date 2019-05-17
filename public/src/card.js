@@ -4,6 +4,8 @@ templateCard.innerHTML = `
     <button class="card-edit-btn">Edit</button>
     <div class="card-id"></div>
     <div class="card-title"></div>
+    <div hidden class="card-description"></div>
+
     <input hidden class="card-title card-title-input" />
     <textarea hidden class="card-description card-description-input"></textarea>
     <div class="card-description"></div>
@@ -20,13 +22,18 @@ class TrelloCard extends HTMLElement {
     this._title = '';
     this._description = '';
     this._columnId = null;
+
+    this.__mode = 'view';
   }
 
   connectedCallback() {
     this.appendChild(templateCard.content.cloneNode(true));
 
     // get local references
+    this.$card = this.querySelector('.card');
     this.$title = this.querySelector('.card-title');
+    this.$description = this.querySelector('.card-description');
+
     this.$titleInput = this.querySelector('.card-title-input');
     this.$descriptionInput = this.querySelector('.card-description-input');
 
@@ -36,6 +43,7 @@ class TrelloCard extends HTMLElement {
     // listen for events
     this.$editButton.addEventListener('click', this.toggleEdit.bind(this));
     this.$saveButton.addEventListener('click', this.saveCard.bind(this));
+    this.$card.addEventListener('click', this.toggleDescription.bind(this));
 
     this.$titleInput.hidden = true;
 
@@ -43,22 +51,43 @@ class TrelloCard extends HTMLElement {
     this._render();
   }
 
-  toggleEdit() {
-    this.$title.hidden = !this.$title.hidden;
-    this.$titleInput.hidden = !this.$titleInput.hidden;
-    this.$descriptionInput.hidden = !this.$descriptionInput.hidden;
-    this.$saveButton.hidden = false
+  toggleDescription() {
+    if (this.__mode !== 'view') return;
 
-    if (!this.$titleInput.hidden) {
+    this.$description.hidden = !this.$description.hidden;
+  }
+
+  toggleEdit(e) {
+    e.stopPropagation();
+
+    this.__mode = this.__mode === 'view' ? 'edit' : 'view';
+
+    if (this.__mode === 'view') {
+      this.$title.hidden = false
+      this.$description.hidden = false
+
+      this.$titleInput.hidden = true
+      this.$descriptionInput.hidden = true
+      this.$saveButton.hidden = true
+    }
+
+
+    if (this.__mode === 'edit') {
+      this.$title.hidden = true
+      this.$description.hidden = true
+
+      this.$titleInput.hidden = false
+      this.$descriptionInput.hidden = false
+      this.$saveButton.hidden = false
+
       this.$titleInput.value = this._title;
       this.$descriptionInput.value = this._description;
-
-
-      console.log('this.$descriptionInput.value', this._description, this.$descriptionInput.value);
     }
   }
 
-  async saveCard() {
+  async saveCard(e) {
+    e.stopPropagation();
+
     const title = this.$titleInput.value;
     const description = this.$descriptionInput.value;
     const columnId = this._columnId;
@@ -86,6 +115,7 @@ class TrelloCard extends HTMLElement {
 
   _render() {
     this.$title.textContent = this._title;
+    this.$description.textContent = this._description;
   }
 }
 
