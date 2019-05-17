@@ -1,10 +1,16 @@
 const templateApp = document.createElement('template');
 templateApp.innerHTML = `
   <section id="app">
-    <div id="columns-container">
+    <div id="search">
+      <input type="text" placeholder="search here" />
     </div>
 
-    <trello-column-creator></trello-column-creator>
+    <div id="columns-section">
+      <div id="columns-container">
+      </div>
+
+      <trello-column-creator></trello-column-creator>
+    </div>
   </section>
 `;
 
