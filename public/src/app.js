@@ -1,8 +1,8 @@
 const templateApp = document.createElement('template');
 templateApp.innerHTML = `
   <section id="app">
-    <div id="search">
-      <input type="text" placeholder="search here" />
+    <div class="search">
+      <input id="search" type="text" placeholder="search here" />
     </div>
 
     <div id="columns-section">
@@ -31,15 +31,22 @@ class TrelloApp extends HTMLElement {
     // get local references
     this.$columnCreator = this.querySelector('trello-column-creator');
     this.$columnsContainer = this.querySelector('#columns-container');
+    this.$search = this.querySelector('#search');
 
-    // listen for events: column creation
+    // listen for events
     this.$columnCreator.addEventListener('columnCreation', this.addColumn.bind(this));
+    this.$search.addEventListener('input', this.search.bind(this));
 
     // render
     this._render();
   }
 
   disconnectedCallback() {}
+
+  search(e) {
+    const query = this.$search.value;
+    updateSearch(query);
+  }
 
   async fetchData() {
     const columns = await API.get.columns();

@@ -54,8 +54,24 @@ class TrelloCard extends HTMLElement {
 
     this.$titleInput.hidden = true;
 
+    subscribeToSearch(this.displayAccordinglyToSearch.bind(this));
+
     // render
     this._render();
+  }
+
+  // displayAccordinglyToSearch will show or hide the card depending
+  // of the search query. This way we won't rerender the board entirely.
+  displayAccordinglyToSearch(searchValue) {
+    if (!searchValue) {
+      this.hidden = false;
+      return;
+    }
+
+    const containsQuery =
+      this._title.includes(searchValue) || this._description.includes(searchValue);
+
+    this.hidden = !containsQuery;
   }
 
   toggleDescription() {
