@@ -45,7 +45,8 @@ const API = {
     card: data => callApi(`cards/${data.id}`, 'PUT', '', data),
   },
   delete: {
-    card: data => callApi(`cards/${data.id}`, 'PUT', '', data),
+    card: data => callApi(`cards/${data.id}`, 'DELETE', '', data),
+    column: data => callApi(`columns/${data.id}`, 'DELETE', '', data),
   },
 };
 
