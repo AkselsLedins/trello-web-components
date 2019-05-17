@@ -19,6 +19,15 @@ const callApi = async (what, method, query, body = {}) => {
     });
     return await response.json();
   }
+  if (['DELETE'].includes(method)) {
+    const response = await fetch(`http://localhost:3000/${what}`, {
+      method,
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    return await response.json();
+  }
 
   throw new Error('Unsupported method.');
 };
@@ -34,7 +43,10 @@ const API = {
   },
   update: {
     card: data => callApi(`cards/${data.id}`, 'PUT', '', data),
-  }
+  },
+  delete: {
+    card: data => callApi(`cards/${data.id}`, 'PUT', '', data),
+  },
 };
 
 window.__API = API;
