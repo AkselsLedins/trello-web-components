@@ -24,7 +24,10 @@ class TrelloColumn extends HTMLElement {
     this._title = this.getAttribute('title') || null;
     this._cards = [];
 
-    this.fetchData.bind(this);
+    // more info on why you need to keep a counter
+    // when implementing dnd
+    // https://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
+    this._dragCounter = 0;
   }
 
   connectedCallback() {
@@ -32,11 +35,17 @@ class TrelloColumn extends HTMLElement {
 
     // get local references
     this.$title = this.querySelector('h2');
-    this.$cardsContainer = this.querySelector('.cards-container');
     this.$cardCreator = this.querySelector('trello-card-creator');
+    this.$cardsContainer = this.querySelector('.cards-container');
+    this.$columnWrapper = this.querySelector('.column-wrapper');
 
-    // listen to events
+    // listen to custom events
     this.$cardCreator.addEventListener('cardCreation', this.addCard.bind(this));
+    // listen to dnd events
+    this.$columnWrapper.addEventListener('dragenter', this.onCardHover.bind(this))
+    this.$columnWrapper.addEventListener('dragleave', this.onCardLeave.bind(this))
+    this.$columnWrapper.addEventListener('drop', this.onDrop.bind(this))
+    this.$columnWrapper.addEventListener('dragover', this.onDragOver.bind(this))
 
     // render
     this._render();
@@ -52,6 +61,36 @@ class TrelloColumn extends HTMLElement {
   attributeChangedCallback(name, _, newValue) {
     this[`_${name}`] = newValue;
   }
+
+  // https://stackoverflow.com/questions/21339924/drop-event-not-firing-in-chrome
+  onDragOver(e) { e.preventDefault() }
+  onCardHover(e) {
+    // console.log('hover', e);
+    e.preventDefault();
+    this._dragCounter++;
+
+    this.$columnWrapper.className += " hovered";
+  }
+  onCardLeave() {
+    this._dragCounter--;
+
+    if (this._dragCounter === 0) {
+      this.$columnWrapper.className = "column-wrapper";
+    }
+  }
+  async onDrop(e) {
+    this.$columnWrapper.className = "column-wrapper";
+    this._dragCounter = 0;
+
+    const data = JSON.parse(e.dataTransfer.getData('text/json'));
+
+    // update card
+    await API.update.card({ ...data, columnId: this._id });
+
+    // NOTE optimization here
+    await this.fetchData();
+  }
+
 
   async fetchData() {
     const cards = await API.get.cards(`columnId=${this._id}`);
@@ -103,7 +142,10 @@ class TrelloColumn extends HTMLElement {
 
       $item.index = index;
 
+      // listen to custom event
       $item.addEventListener('cardUpdate', this.replaceCard.bind(this))
+      // listen to native event dragend to fetch all data again
+      $item.addEventListener('dragend', this.fetchData.bind(this));
 
       this.$cardsContainer.appendChild($item);
     });

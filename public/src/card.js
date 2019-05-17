@@ -1,6 +1,6 @@
 const templateCard = document.createElement('template');
 templateCard.innerHTML = `
-  <div class="card">
+  <div class="card" draggable="true">
     <button class="card-edit-btn">Edit</button>
     <div class="card-id"></div>
     <div class="card-title"></div>
@@ -44,6 +44,9 @@ class TrelloCard extends HTMLElement {
     this.$editButton.addEventListener('click', this.toggleEdit.bind(this));
     this.$saveButton.addEventListener('click', this.saveCard.bind(this));
     this.$card.addEventListener('click', this.toggleDescription.bind(this));
+
+    // handle dnd
+    this.$card.addEventListener('dragstart', this.onDragStart.bind(this))
 
     this.$titleInput.hidden = true;
 
@@ -97,7 +100,7 @@ class TrelloCard extends HTMLElement {
 
     this.dispatchEvent(new CustomEvent('cardUpdate', { detail: card }));
 
-    this.toggleEdit();
+    this.toggleEdit(e);
   }
 
   disconnectedCallback() { }
@@ -111,6 +114,17 @@ class TrelloCard extends HTMLElement {
       return;
     }
     this[`_${name}`] = newValue || '';
+  }
+
+  onDragStart(e) {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/json', JSON.stringify({
+      id: this._id,
+      columnId: this._columnId,
+      // add other fields otherwise the JSON-SERVER api will remove them
+      description: this._description,
+      title: this._title,
+    }));
   }
 
   _render() {
