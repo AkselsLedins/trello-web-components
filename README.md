@@ -43,8 +43,8 @@
 
 ### Missing features
 
-* ❌ #14 modify a column
-* ❌ #10 cards and columns should be unique
+* ❌ [#14](https://github.com/AkselsLedins/trello-web-components/issues/14) modify a column
+* ❌ [#10](https://github.com/AkselsLedins/trello-web-components/issues/10) cards and columns should be unique
 
 Any contribution is welcome. Please see [CONTRIBUTING.md](./docs/CONTRIBUTING.md)
 
