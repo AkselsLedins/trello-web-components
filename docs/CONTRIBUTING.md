@@ -31,3 +31,53 @@ Examples of types:
 (refac)  => refactor
 (bug)    => solved an issue
 ```
+
+## Codebase
+
+There is **5** Web components at the moment.
+
+### _TrelloApp_ `<trello-app>`
+
+It's the root of our application.
+
+### TrelloCard `<trello-card-creator>`
+
+Displays a card from the API.
+
+<div align="center">
+  <img src="./card.png" alt="illustration" width="50%" />
+</div>
+
+### TrelloCardCreator `<trello-card-creator>`
+
+Allows to create cards within the application.
+
+<div align="center">
+  <img src="./card-creator.png" alt="illustration" width="50%" />
+</div>
+
+### TrelloColumn `<trello-card-creator>`
+
+Handles cards and card creator.
+
+<div align="center">
+  <img src="./column.png" alt="illustration" width="50%" />
+</div>
+
+
+### TrelloColumn `<trello-card-creator>`
+
+Handles cards and card creator.
+
+<div align="center">
+  <img src="./column.png" alt="illustration" width="50%" />
+</div>
+
+
+### TrelloColumnCreator `<trello-card-creator>`
+
+Allows to create columns within the application.
+
+<div align="center">
+  <img src="./column-creator.png" alt="illustration" width="50%" />
+</div>
