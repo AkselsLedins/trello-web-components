@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "json-server --watch data/db.json  --static ./public",
-    "test": "cp data/db.json.template data/db.json && node ./node_modules/jest/bin/jest.js --testPathIgnorePatterns ./data/* ",
-    "circle-ci": "start-server-and-test start http://localhost:3000 test"
+    "test-with-jest": "cp data/db.json.template data/db.json && node ./node_modules/jest/bin/jest.js --testPathIgnorePatterns ./data/*",
+    "test": "start-server-and-test start http://localhost:3000 test-with-jest",
+    "circle-ci": "start-server-and-test start http://localhost:3000 test-with-jest"
   },
   "repository": {
     "type": "git",
