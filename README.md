@@ -1,3 +1,12 @@
+<div align="center">
+
+[![GitHub issues](https://img.shields.io/github/issues/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/issues)
+[![GitHub forks](https://img.shields.io/github/forks/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/network)
+[![GitHub forks](https://img.shields.io/github/forks/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/network)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/AkselsLedins/trello-web-components.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FAkselsLedins%2Ftrello-web-components)
+[![GitHub license](https://img.shields.io/github/license/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components)
+</div>
+
 <img src="docs/logo.png" alt="logo" width="25%" align="right"  />
 
 <h1>Trello-like - with Web Components</h1>
