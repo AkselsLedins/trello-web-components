@@ -91,4 +91,4 @@ This will test the application. Beware, it will **override** the database in `da
 
 There are only one E2E test. We believe that it will be counter-productive writing unit tests for this app.
 
-At the moment the application is not covered at 100%. Each feature should be tested and CircleCI should be connected to this repository in order to prevent defects in future developments.
+At the moment the application is not covered at 100%. Each feature should be tested in order to prevent defects in future developments.
