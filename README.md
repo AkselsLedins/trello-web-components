@@ -3,7 +3,7 @@
 [![CircleCI](https://circleci.com/gh/AkselsLedins/trello-web-components.svg?style=svg)](https://circleci.com/gh/AkselsLedins/trello-web-components)
 [![GitHub issues](https://img.shields.io/github/issues/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/issues)
 [![GitHub forks](https://img.shields.io/github/forks/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/network)
-[![GitHub forks](https://img.shields.io/github/forks/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/network)
+[![GitHub stars](https://img.shields.io/github/stars/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/stargazers)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/AkselsLedins/trello-web-components.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FAkselsLedins%2Ftrello-web-components)
 [![GitHub license](https://img.shields.io/github/license/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components)
 </div>
