@@ -1,5 +1,6 @@
 <div align="center">
 
+[![CircleCI](https://circleci.com/gh/AkselsLedins/trello-web-components.svg?style=svg)](https://circleci.com/gh/AkselsLedins/trello-web-components)
 [![GitHub issues](https://img.shields.io/github/issues/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/issues)
 [![GitHub forks](https://img.shields.io/github/forks/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/network)
 [![GitHub forks](https://img.shields.io/github/forks/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/network)
@@ -90,4 +91,4 @@ This will test the application. Beware, it will **override** the database in `da
 
 There are only one E2E test. We believe that it will be counter-productive writing unit tests for this app.
 
-At the moment the application is not covered at 100%. Each feature should be tested and CircleCI should be connected to this repository in order to prevent defects in future developments.
+At the moment the application is not covered at 100%. Each feature should be tested in order to prevent defects in future developments.

@@ -107,3 +107,9 @@ When you think your code is ready to merge, then ask for a review (label it as *
 <div align="center">
   <img src="./rfr.png" alt="illustration" width="50%" />
 </div>
+
+Ask for a review and mark it as RFR only **when tests are passing**.
+
+<div align="center">
+  <img src="./circleci.png" alt="illustration" width="75%" />
+</div>
