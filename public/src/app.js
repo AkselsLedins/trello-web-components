@@ -77,7 +77,7 @@ class TrelloApp extends HTMLElement {
 
     // NOTE: we should delete all cards associated to this column but
     //       the API should handle that so we can just ignore that and
-    //       let the cards column less in the db
+    //       let the cards column-less in the db
   }
 
   _render() {

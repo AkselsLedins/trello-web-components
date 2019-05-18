@@ -71,7 +71,6 @@ class TrelloColumn extends HTMLElement {
     e.preventDefault();
   }
   onCardHover(e) {
-    // console.log('hover', e);
     e.preventDefault();
     this._dragCounter++;
 
@@ -88,6 +87,7 @@ class TrelloColumn extends HTMLElement {
     this.$columnWrapper.className = 'column-wrapper';
     this._dragCounter = 0;
 
+    // get card data from the event
     const data = JSON.parse(e.dataTransfer.getData('text/json'));
 
     // update card
@@ -106,7 +106,6 @@ class TrelloColumn extends HTMLElement {
   }
 
   async addCard(e) {
-    // find the next id
     const { title, description } = e.detail;
 
     const data = await API.create.card({
@@ -142,6 +141,7 @@ class TrelloColumn extends HTMLElement {
   }
 
   async deleteColumn() {
+    // prevent unexpected deletes
     if (!window.confirm('Are you sure you want to delete that column and all of its cards ?'))
       return;
 
