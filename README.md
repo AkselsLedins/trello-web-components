@@ -80,8 +80,8 @@ You can access the application on your browser at `http://localhost:3000`
 $> npm test
 ```
 
-The application should be running on port `3000`. <br />
 This will test the application. Beware, it will **override** the database in `data/db.json`.
+Port `3000` should be free.
 
 <div align="center">
   <img src="docs/npm-test.png" alt="illustration" width="80%" />
