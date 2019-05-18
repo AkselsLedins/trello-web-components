@@ -81,3 +81,20 @@ Allows to create columns within the application.
 <div align="center">
   <img src="./column-creator.png" alt="illustration" width="50%" />
 </div>
+
+## Pull requests
+
+When creating a pull request, the content will be automatically filled with a default PR structure.
+Just fill it.
+
+When you are working on it label it as **WIP**.
+
+<div align="center">
+  <img src="./wip.png" alt="illustration" width="50%" />
+</div>
+
+When you think your code is ready to merge, then ask for a review (label it as **RFR** and ask for a review.).
+
+<div align="center">
+  <img src="./rfr.png" alt="illustration" width="50%" />
+</div>
