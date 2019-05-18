@@ -1,5 +1,6 @@
 <div align="center">
 
+[![CircleCI](https://circleci.com/gh/AkselsLedins/trello-web-components.svg?style=svg)](https://circleci.com/gh/AkselsLedins/trello-web-components)
 [![GitHub issues](https://img.shields.io/github/issues/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/issues)
 [![GitHub forks](https://img.shields.io/github/forks/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/network)
 [![GitHub forks](https://img.shields.io/github/forks/AkselsLedins/trello-web-components.svg)](https://github.com/AkselsLedins/trello-web-components/network)
