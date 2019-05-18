@@ -32,6 +32,15 @@ Examples of types:
 (bug)    => solved an issue
 ```
 
+Please **sign** your commits.
+
+<div align="center">
+  <img src="./signed-commit.png" alt="illustration" width="50%" />
+</div>
+
+Good read on this: https://mikegerwitz.com/2012/05/a-git-horror-story-repository-integrity-with-signed-commits
+
+
 ## Codebase
 
 There is **5** Web components at the moment.
