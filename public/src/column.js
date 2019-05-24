@@ -4,7 +4,10 @@ templateColumn.innerHTML = `
     <div class="column">
       <div class="column-header">
         <h2></h2>
+        <div class="column-edit-button"></div>
         <div class="column-delete-button"></div>
+        <input hidden class="column-header column-header-input"/>
+        <button hidden class="primary column-save-button">Save</button>
       </div>
 
       <div class="cards cards-container"></div>
@@ -36,7 +39,10 @@ class TrelloColumn extends HTMLElement {
 
     // get local references
     this.$title = this.querySelector('h2');
+    this.$editButton = this.querySelector('.column-edit-button');
     this.$deleteButton = this.querySelector('.column-delete-button');
+    this.$titleInput = this.querySelector('.column-header-input');
+    this.$saveButton = this.querySelector('.column-save-button');
     this.$cardCreator = this.querySelector('trello-card-creator');
     this.$cardsContainer = this.querySelector('.cards-container');
     this.$columnWrapper = this.querySelector('.column-wrapper');
@@ -49,6 +55,8 @@ class TrelloColumn extends HTMLElement {
     this.$columnWrapper.addEventListener('drop', this.onDrop.bind(this));
     this.$columnWrapper.addEventListener('dragover', this.onDragOver.bind(this));
     // listen to other events
+    this.$editButton.addEventListener('click', this.toggleEdit.bind(this));
+    this.$saveButton.addEventListener('click', this.saveColumn.bind(this));
     this.$deleteButton.addEventListener('click', this.deleteColumn.bind(this));
 
     // render
@@ -140,15 +148,48 @@ class TrelloColumn extends HTMLElement {
     this._render();
   }
 
+  toggleEdit(e) {
+    e.stopPropagation();
+
+    this.__mode = this.__mode === 'view' ? 'edit' : 'edit';
+
+    if (this.__mode === 'view') {
+      this.$title.hidden = false;
+      this.$titleInput.hidden = true;
+      this.$saveButton.hidden = true;
+    }
+
+    if (this.__mode === 'edit') {
+      this.$title.hidden = true;
+      this.$titleInput.hidden = false;
+      this.$saveButton.hidden = false;
+      this.$titleInput.value = this._title;
+    }
+  }
+  
   async deleteColumn() {
-    // prevent unexpected deletes
-    if (!window.confirm('Are you sure you want to delete that column and all of its cards ?'))
+  // prevent unexpected deletes
+  if (!window.confirm('Are you sure you want to delete that column and all of its cards ?'))
       return;
 
     await API.delete.column({ id: this._id });
 
     this.dispatchEvent(new CustomEvent('columnDelete', { detail: this._id }));
   }
+  
+  async saveColumn(e) {
+    e.stopPropagation();
+
+    const id = this._id;
+    const title = this.$titleInput.value;
+
+    const column = await API.update.column({ id, title });
+
+    this.dispatchEvent(new CustomEvent('columnUpdate', { detail: column }));
+
+    this.toggleEdit(e);
+  }
+  
 
   _render() {
     this.$title.textContent = this._title;

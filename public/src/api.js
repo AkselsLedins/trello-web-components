@@ -43,6 +43,7 @@ const API = {
   },
   update: {
     card: data => callApi(`cards/${data.id}`, 'PUT', '', data),
+    column: data => callApi(`columns/${data.id}`, 'PUT', '', data),
   },
   delete: {
     card: data => callApi(`cards/${data.id}`, 'DELETE', '', data),

@@ -66,6 +66,15 @@ class TrelloApp extends HTMLElement {
 
     this._render();
   }
+  
+  replaceColumn(e) {
+    const newColumn = e.detail;
+    const index = this._columns.findIndex(column => column.id === newColumn.id);
+
+    this._columns[index] = newColumn;
+
+    this._render();
+  }
 
   async deleteColumn(e) {
     const columnId = e.detail;
@@ -98,6 +107,7 @@ class TrelloApp extends HTMLElement {
       $item.setAttribute('title', title);
       $item.index = index;
 
+      $item.addEventListener('columnUpdate', this.replaceColumn.bind(this));
       $item.addEventListener('columnDelete', this.deleteColumn.bind(this));
 
       this.$columnsContainer.appendChild($item);
