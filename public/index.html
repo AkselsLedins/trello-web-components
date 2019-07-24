@@ -1,268 +1,312 @@
 <!doctype html>
 <html dir="ltr" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Trello-like application</title>
-    <meta name="description" content="Trello-like application with Web Components" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"
-    />
 
-    <!-- taken from trello -->
-    <link id="favicon" rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAD1ElEQVR4Xu1ba0hUQRT+bj5S01R0pVRqc0FCozQjIUsLy59ZWvqjB1pGQQbqD0kSzbDsTyUVRGmp5a8CXxCJFioiZGQPKInAXCWtXMX1/di1jbu6prbrveZ1nHXnwv7Ze+c7Z745M3POnDkcTD1efvfh6X8YMrkMHopROMl+w97JFlY21ibb0PBiQqPFyMA4BlSr0NViB5VShc7PpehoPmtMPe6fPxU7L8EvPBtbImjojnQ6fKoCml+lo+XN1ZmgswkIPPgN+xO9YW1jI51kipC0Gg1e3v2O9xU+Bq3+EhAU1YqIC3KK1F06VaruKNFUsokXMEmAb2gmDqWnUz+/paKEXycqrmXjS23WJAGRGTr47ZMK3jxwmmuA8iscB++teTieGw+OszIPzSXSUqebQHFSAYfQ+G6EnHSTCNa8YBoe93CIztbBN0S84j1tgPon0NsBjAyYbmfvBLh6Ac7rAfcN4vFnfrnUspprwCGhYAwyua0YDeUfnyDz9BHIPT0Q4L8ZLk5r5m1W+7oJ6sFhJN8qhHLbCTEipr8hIkulHOeQXD4Gu7WCBMSN1aDgRtaCOmH4WD04guTM6yhcLW6hJSZrtH+cQ2q1FlbW8y6A/Gi0Pn/4X52fSUJgbKKgJZCUhQntBIe0Gt28PetuR1msDyLDdy+KAL5xUWkl4ip/AW4bjWORlDWlgTABLY2oTTmAsODtiyagrvEd9t6sBhTBxrFIyhJNwNsS6KpuL7rzPIB6YAiu0WnAjijjeCRliSagvgi6+gJJCOBBuD1xAP8z9pCUxQiYZEB4DSA5KiRlMQtgFsCmAFsD2CLIdgG2DTI/QDAaJOmckJTFHCHmCDFHiDlCzBGizRGS8ESob3AYLlEXTZ8+UbkLUHkmSHJv7mlDWYxCuhPoF12CWSm6PEEAUuQF+oZGERBzXjAHQd8uMDUvF5MZ4juflJEjOgtFnQUYDot5S8hNiYeLo4M+D+ns6DDvyTSfc1B2duFy/jNRI28Ao5YAvYLd7UDfj6lMdL9pAuzXTmaiXdaZzjqZaE03AZJlI0wDMQKoCocJjPhcEcwCmAUI3Q8g6QmyKUCeAbYGCK4ByxCikrQDYQtYhhCVLgKWIUSli4BlCFGpI4BXiGSISpYAERclSYeoxAjQX5QUeVV2WikCISoxAvRXZc8Vj8PVa2XWCAkx2duhWfh1eSFQc3r/tQEcdh1TISzB3Zz0lkzXuvxuDh6KeziVd8YiS2YeJTxgRVN6c5IHpeFoTtaKLZicO2f4srmnqRlQfshhhZOzyLHo0lkDExZdPD3THCykfP4PBqb26dvM+EQAAAAASUVORK5CYII=">
+<head>
+  <meta charset="utf-8" />
+  <title>Trello-like application</title>
+  <meta name="description" content="Trello-like application with Web Components" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <script src="./src/api.js"></script>
-    <script src="./src/app.js"></script>
-    <script src="./src/card.js"></script>
-    <script src="./src/column.js"></script>
-    <script src="./src/column-creator.js"></script>
-    <script src="./src/card-creator.js"></script>
-    <script src="./src/search.js"></script>
-  </head>
+  <!-- taken from trello -->
+  <link id="favicon" rel="icon" type="image/png" sizes="64x64"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAD1ElEQVR4Xu1ba0hUQRT+bj5S01R0pVRqc0FCozQjIUsLy59ZWvqjB1pGQQbqD0kSzbDsTyUVRGmp5a8CXxCJFioiZGQPKInAXCWtXMX1/di1jbu6prbrveZ1nHXnwv7Ze+c7Z745M3POnDkcTD1efvfh6X8YMrkMHopROMl+w97JFlY21ibb0PBiQqPFyMA4BlSr0NViB5VShc7PpehoPmtMPe6fPxU7L8EvPBtbImjojnQ6fKoCml+lo+XN1ZmgswkIPPgN+xO9YW1jI51kipC0Gg1e3v2O9xU+Bq3+EhAU1YqIC3KK1F06VaruKNFUsokXMEmAb2gmDqWnUz+/paKEXycqrmXjS23WJAGRGTr47ZMK3jxwmmuA8iscB++teTieGw+OszIPzSXSUqebQHFSAYfQ+G6EnHSTCNa8YBoe93CIztbBN0S84j1tgPon0NsBjAyYbmfvBLh6Ac7rAfcN4vFnfrnUspprwCGhYAwyua0YDeUfnyDz9BHIPT0Q4L8ZLk5r5m1W+7oJ6sFhJN8qhHLbCTEipr8hIkulHOeQXD4Gu7WCBMSN1aDgRtaCOmH4WD04guTM6yhcLW6hJSZrtH+cQ2q1FlbW8y6A/Gi0Pn/4X52fSUJgbKKgJZCUhQntBIe0Gt28PetuR1msDyLDdy+KAL5xUWkl4ip/AW4bjWORlDWlgTABLY2oTTmAsODtiyagrvEd9t6sBhTBxrFIyhJNwNsS6KpuL7rzPIB6YAiu0WnAjijjeCRliSagvgi6+gJJCOBBuD1xAP8z9pCUxQiYZEB4DSA5KiRlMQtgFsCmAFsD2CLIdgG2DTI/QDAaJOmckJTFHCHmCDFHiDlCzBGizRGS8ESob3AYLlEXTZ8+UbkLUHkmSHJv7mlDWYxCuhPoF12CWSm6PEEAUuQF+oZGERBzXjAHQd8uMDUvF5MZ4juflJEjOgtFnQUYDot5S8hNiYeLo4M+D+ns6DDvyTSfc1B2duFy/jNRI28Ao5YAvYLd7UDfj6lMdL9pAuzXTmaiXdaZzjqZaE03AZJlI0wDMQKoCocJjPhcEcwCmAUI3Q8g6QmyKUCeAbYGCK4ByxCikrQDYQtYhhCVLgKWIUSli4BlCFGpI4BXiGSISpYAERclSYeoxAjQX5QUeVV2WikCISoxAvRXZc8Vj8PVa2XWCAkx2duhWfh1eSFQc3r/tQEcdh1TISzB3Zz0lkzXuvxuDh6KeziVd8YiS2YeJTxgRVN6c5IHpeFoTtaKLZicO2f4srmnqRlQfshhhZOzyLHo0lkDExZdPD3THCykfP4PBqb26dvM+EQAAAAASUVORK5CYII=">
 
-  <body>
-    <h1>Trello-like application with Web Components</h1>
-    <trello-app />
+  <script src="./src/api.js"></script>
+  <script src="./src/app.js"></script>
+  <script src="./src/card.js"></script>
+  <script src="./src/column.js"></script>
+  <script src="./src/column-creator.js"></script>
+  <script src="./src/card-creator.js"></script>
+  <script src="./src/search.js"></script>
+</head>
 
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
+<body>
+  <h1>Trello-like application with Web Components</h1>
+  <trello-app />
 
-        background-color: rgb(0, 121, 191);
-        color: #172b4d;
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: 400;
-      }
-      h2 {
-        font-size: 14px;
-        line-height: 24px;
-        margin: 0 0 8px;
-      }
-      body, button, html, input, select, textarea {
-        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
-      }
-      textarea {
-        color: #172b4d;
-        box-sizing: border-box;
-        -webkit-appearance: none;
-        border-radius: 3px;
-        line-height: 20px;
-        padding: 8px 12px;
-        font: inherit;
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
 
-        background: #fff;
-        border: 2px solid #0079bf;
-        border-top: none;
-        display: block;
-        margin: 0;
-        transition: margin 85ms ease-in,background 85ms ease-in;
-        width: 100%;
+      background-color: rgb(0, 121, 191);
+      color: #172b4d;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
 
-        resize: none;
-      }
-      input {
-        color: #172b4d;
-        box-sizing: border-box;
-        -webkit-appearance: none;
-        border-radius: 3px;
-        line-height: 20px;
-        padding: 8px 12px;
-        font: inherit;
+    h2 {
+      font-size: 14px;
+      line-height: 24px;
+      margin: 0 0 8px;
+    }
 
-        background: #fff;
-        border: 2px solid #0079bf;
-        display: block;
-        margin: 0;
-        transition: margin 85ms ease-in,background 85ms ease-in;
-        width: 100%;
-      }
+    body,
+    button,
+    html,
+    input,
+    select,
+    textarea {
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+    }
 
-      button.primary {
-        background-color: #5aac44;
-        box-shadow: 0 1px 0 0 #3f6f21;
-        border: none;
-        color: #fff;
-      }
-      button, button[type=submit] {
-        cursor: pointer;
-        font-weight: 700;
-        line-height: 20px;
-        margin: 8px 4px 0 0;
-        padding: 6px 12px;
-        text-align: center;
-        box-sizing: border-box;
-        -webkit-appearance: none;
-        border-radius: 3px;
-        transition-property: background-color,border-color,box-shadow;
-        transition-duration: 85ms;
-        transition-timing-function: ease;
-        font-size: 14px;
-      }
+    textarea {
+      color: #172b4d;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      border-radius: 3px;
+      line-height: 20px;
+      padding: 8px 12px;
+      font: inherit;
 
-      #app-section {
-        display: flex;
-        flex-direction: column;
-      }
-      #columns-section, #columns-container {
-        display: flex;
-        flex-direction: row;
-      }
+      background: #fff;
+      border: 2px solid #0079bf;
+      border-top: none;
+      display: block;
+      margin: 0;
+      transition: margin 85ms ease-in, background 85ms ease-in;
+      width: 100%;
 
-      .column-wrapper {
-        width: 272px;
-        height: 100%;
-        box-sizing: border-box;
-        display: inline-block;
-        vertical-align: top;
-        white-space: nowrap;
-        border: 5px solid transparent;
-      }
-      .column-wrapper.hovered {
-        border: dotted 5px black;
-      }
+      resize: none;
+    }
 
-      .column {
-        background-color: #dfe1e6;
-        border-radius: 3px;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        max-height: 100%;
-        position: relative;
-        white-space: normal;
-      }
-      .column-header {
-        flex: 0 0 auto;
-        padding: 10px 8px 8px;
-        position: relative;
-        min-height: 20px;
-      }
-      .column-delete-button {
-        position: absolute;
-        top: 4px;
-        right: 4px;
-        height: 24px;
-        width: 24px;
-        background-image: url(/icons/garbage.png);
-      }
+    input {
+      color: #172b4d;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      border-radius: 3px;
+      line-height: 20px;
+      padding: 8px 12px;
+      font: inherit;
 
-      .cards {
-        flex: 1 1 auto;
-        margin-bottom: 0;
-        overflow-y: auto;
-        overflow-x: hidden;
-        margin: 0 4px;
-        padding: 0 4px;
-        z-index: 1;
-        min-height: 0;
-      }
-      .card {
-        background-color: #fff;
-        border-radius: 3px;
-        box-shadow: 0 1px 0 rgba(9,30,66,.25);
-        cursor: pointer;
-        display: block;
-        margin-bottom: 8px;
-        max-width: 300px;
-        min-height: 32px;
-        position: relative;
-        text-decoration: none;
-        z-index: 0;
+      background: #fff;
+      border: 2px solid #0079bf;
+      display: block;
+      margin: 0;
+      transition: margin 85ms ease-in, background 85ms ease-in;
+      width: 100%;
+    }
 
-        overflow: hidden;
-        padding: 32px 8px 30px;
-        position: relative;
-        z-index: 10;
-      }
-      .card-title {
-        clear: both;
-        display: block;
-        margin: 0;
-        overflow: hidden;
-        text-decoration: none;
-        word-wrap: break-word;
-        color: #172b4d;
-      }
+    button.primary {
+      background-color: #5aac44;
+      box-shadow: 0 1px 0 0 #3f6f21;
+      border: none;
+      color: #fff;
+    }
 
-      #new-card-input {
-        box-shadow: none;
-        border: none;
-      }
+    button,
+    button[type=submit] {
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 20px;
+      margin: 8px 4px 0 0;
+      padding: 6px 12px;
+      text-align: center;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      border-radius: 3px;
+      transition-property: background-color, border-color, box-shadow;
+      transition-duration: 85ms;
+      transition-timing-function: ease;
+      font-size: 14px;
+    }
 
-      .card-composer {
-        padding-bottom: 8px;
-      }
+    #app-section {
+      display: flex;
+      flex-direction: column;
+    }
 
-      .mod-add {
-        background-color: #dfe1e6;
-        border-radius: 3px;
-        height: auto;
-        min-height: 32px;
-        padding: 4px;
-        transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
-        margin-top: 4px;
-      }
+    #columns-section,
+    #columns-container {
+      display: flex;
+      flex-direction: row;
+    }
 
-      .card-id {
-        color: #dddddd;
-        font-size: 0.8em;
-        display: none;
-      }
-      .card-edit-btn {
-        position: absolute;
-        top: 4px;
-        right: 4px;
-        height: 24px;
-        width: 24px;
-        background-image: url(/icons/edit.png);
-      }
-      .card-delete-btn {
-        position: absolute;
-        bottom: 4px;
-        right: 4px;
-        height: 24px;
-        width: 24px;
-        background-image: url(/icons/garbage.png)
-      }
+    .column-wrapper {
+      width: 272px;
+      height: 100%;
+      box-sizing: border-box;
+      display: inline-block;
+      vertical-align: top;
+      white-space: nowrap;
+      border: 5px solid transparent;
+    }
 
-      .card-title[hidden], .card-description[hidden] {
-        display: none;
-      }
+    .column-wrapper.hovered {
+      border: dotted 5px black;
+    }
 
-      .card-title-input, .card-creator-title-input {
-        width: 100%;
-      }
-      .card-description-input, .card-creator-description-input {
-        width: 100%;
-        border-top: none;
-        border-top-right-radius: 0;
-        border-top-left-radius: 0;
-        margin-top: -1px;
-      }
+    .column {
+      background-color: #dfe1e6;
+      border-radius: 3px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      max-height: 100%;
+      position: relative;
+      white-space: normal;
+    }
 
-      .search {
-        padding-left: 4px;
-        padding-right: 4px;
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        align-items: center;
-      }
-      .search-icon {
-        position: absolute;
-        left: 12px;
-        height: 24px;
-        width: 24px;
-        background-color: #FFF;
-        background-image: url(/icons/search.png)
-      }
-      #search {
-        padding-left: 42px;
-      }
-    </style>
-  </body>
+    .column-header {
+      flex: 0 0 auto;
+      padding: 10px 8px 8px;
+      position: relative;
+      min-height: 20px;
+    }
+
+    .column-edit-button {
+      position: absolute;
+      top: 4px;
+      right: 35px;
+      height: 24px;
+      width: 24px;
+      background-image: url(/icons/edit.png);
+    }
+
+    .column-delete-button {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      height: 24px;
+      width: 24px;
+      background-image: url(/icons/garbage.png);
+    }
+
+    .column-header[hidden] {
+      display: none;
+    }
+
+    /* added margin to avoid the input field covering buttons*/
+    .column-header-input {
+      margin-top: 24px;
+    }
+
+    .cards {
+      flex: 1 1 auto;
+      margin-bottom: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      margin: 0 4px;
+      padding: 0 4px;
+      z-index: 1;
+      min-height: 0;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 3px;
+      box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
+      cursor: pointer;
+      display: block;
+      margin-bottom: 8px;
+      max-width: 300px;
+      min-height: 32px;
+      position: relative;
+      text-decoration: none;
+      z-index: 0;
+
+      overflow: hidden;
+      padding: 32px 8px 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card-title {
+      clear: both;
+      display: block;
+      margin: 0;
+      overflow: hidden;
+      text-decoration: none;
+      word-wrap: break-word;
+      color: #172b4d;
+    }
+
+    #new-card-input {
+      box-shadow: none;
+      border: none;
+    }
+
+    .card-composer {
+      padding-bottom: 8px;
+    }
+
+    .mod-add {
+      background-color: #dfe1e6;
+      border-radius: 3px;
+      height: auto;
+      min-height: 32px;
+      padding: 4px;
+      transition: background 85ms ease-in, opacity 40ms ease-in, border-color 85ms ease-in;
+      margin-top: 4px;
+    }
+
+    .card-id {
+      color: #dddddd;
+      font-size: 0.8em;
+      display: none;
+    }
+
+    .card-edit-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      height: 24px;
+      width: 24px;
+      background-image: url(/icons/edit.png);
+    }
+
+    .card-delete-btn {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      height: 24px;
+      width: 24px;
+      background-image: url(/icons/garbage.png)
+    }
+
+    .card-title[hidden],
+    .card-description[hidden] {
+      display: none;
+    }
+
+    .card-title-input,
+    .card-creator-title-input {
+      width: 100%;
+    }
+
+    .card-description-input,
+    .card-creator-description-input {
+      width: 100%;
+      border-top: none;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+      margin-top: -1px;
+    }
+
+    .search {
+      padding-left: 4px;
+      padding-right: 4px;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      height: 24px;
+      width: 24px;
+      background-color: #FFF;
+      background-image: url(/icons/search.png)
+    }
+
+    #search {
+      padding-left: 42px;
+    }
+  </style>
+</body>
+
 </html>
