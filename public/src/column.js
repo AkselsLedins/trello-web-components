@@ -65,7 +65,7 @@ class TrelloColumn extends HTMLElement {
     this.fetchData();
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() { }
 
   static get observedAttributes() {
     return ['id', 'title'];
@@ -166,17 +166,17 @@ class TrelloColumn extends HTMLElement {
       this.$titleInput.value = this._title;
     }
   }
-  
+
   async deleteColumn() {
-  // prevent unexpected deletes
-  if (!window.confirm('Are you sure you want to delete that column and all of its cards ?'))
+    // prevent unexpected deletes
+    if (!window.confirm('Are you sure you want to delete that column and all of its cards ?'))
       return;
 
     await API.delete.column({ id: this._id });
 
     this.dispatchEvent(new CustomEvent('columnDelete', { detail: this._id }));
   }
-  
+
   async saveColumn(e) {
     e.stopPropagation();
 
@@ -189,7 +189,7 @@ class TrelloColumn extends HTMLElement {
 
     this.toggleEdit(e);
   }
-  
+
 
   _render() {
     this.$title.textContent = this._title;
